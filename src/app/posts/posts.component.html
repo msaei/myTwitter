@@ -1,4 +1,4 @@
-<div *ngFor="let post of posts">
+<div *ngFor="let post of posts | async">
     <a [routerLink]="['/post', post.id]">
     {{post.body}}
     </a>

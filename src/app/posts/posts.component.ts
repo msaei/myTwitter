@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import * as firebase from 'firebase';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 
 export const POSTS = [
   {
@@ -21,15 +24,19 @@ export const POSTS = [
   styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit {
-  private _posts: any[] = POSTS;
+  //private _posts: any[] = POSTS;
+  private _posts: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
   constructor() { }
 
   ngOnInit() {
+    firebase.database().ref('posts').on('value', (snapshot: any) => {
+      this._posts.next(snapshot.val());
+    });
   }
 
-  get posts(){
-    return this._posts;
+  get posts(): Observable<any[]>{
+    return this._posts.asObservable();
   }
 
 }
