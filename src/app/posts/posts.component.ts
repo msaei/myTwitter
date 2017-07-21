@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-const POSTS = [
+export const POSTS = [
   {
     id: 1,
     body: 'this is my first twitt'
