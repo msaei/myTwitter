@@ -1,6 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { POSTS } from '../posts/posts.component';
+
+import * as firebase from 'firebase';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-post-detail',
@@ -8,24 +11,27 @@ import { POSTS } from '../posts/posts.component';
   styleUrls: ['./post-detail.component.css']
 })
 export class PostDetailComponent implements OnInit, OnDestroy {
-  private _postId: number = 1;
-  private _post: any;
+  public postId: any;
+  public twitt: any;
   private sub: any;
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private _zone: NgZone) { }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-      this._postId = +params['id'];
-    })
-    this._post = POSTS[this._postId];
+      console.log(params);
+      this.postId = params['id'];
+      let twittRef = firebase.database().ref('twitt/' + this.postId );
+      twittRef.on('value', snapshot => {
+        console.log(snapshot.val());
+        this._zone.run(() => {
+          this.twitt = snapshot.val();
+        });
+       });
+    });
   }
 
   ngOnDestroy(){
     this.sub.unsubscribe();
-  }
-
-  get post() {
-    return this._post;
   }
 
 }

@@ -3,20 +3,7 @@ import * as firebase from 'firebase';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
-export const POSTS = [
-  {
-    id: 1,
-    body: 'this is my first twitt'
-  },
-  {
-    id: 2,
-    body: 'this is my second twitt'
-  },
-  {
-    id: 3,
-    body: 'this is my third twitt'
-  },
-]
+
 
 @Component({
   selector: 'app-posts',
@@ -30,13 +17,27 @@ export class PostsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    firebase.database().ref('posts').on('value', (snapshot: any) => {
-      this._posts.next(snapshot.val());
+    firebase.database().ref('twitt').on('child_added', (data: any) => {
+      let twitt = data.val();
+      let key = { 'key': data.key};
+      Object.assign(twitt , key);
+      console.log(twitt);
+      this._posts.value.push(twitt);
+      //this._tools.next(snapshot.val());
     });
   }
 
   get posts(): Observable<any[]>{
     return this._posts.asObservable();
+  }
+
+  public send_twitt(twt) {
+    console.log(twt);
+    let twitt = {
+      body: twt
+    };
+    let newTwitt = firebase.database().ref('twitt').push();
+    newTwitt.set(twitt);
   }
 
 }
