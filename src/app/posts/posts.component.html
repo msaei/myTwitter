@@ -5,9 +5,11 @@
     <input type="text" #twt placeholder="write new twitt">
     <button (click)="send_twitt(twt.value)">send twitt</button>
 </div>
-
-<div *ngFor="let post of posts | async">
-    <a [routerLink]="['/post', post.key]">
-    {{post.body}}
-    </a>
-</div>
+<md-card>
+    <md-list>
+        <md-list-item *ngFor="let post of posts | async">
+            {{post.body + ' . '}}
+            <a [routerLink]="['/post', post.key]"> read more ...</a>
+        </md-list-item>
+    </md-list>
+</md-card>
