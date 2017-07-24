@@ -1,7 +1,10 @@
 <md-card>Simple card</md-card>
 <p>{{postId}}</p>
 <p>{{twitt.body}}</p>
-<input type="text" #reply>
-<button (click)="sendReply(reply.value)">send reply</button><br>
+<div *ngIf="user">
+    <input type="text" #reply>
+    <button (click)="sendReply(reply.value)">send reply</button>
+</div>
 <div *ngFor="let reply of replys | async">{{reply.body}}</div>
+
 <a routerLink="/posts">Back to Posts List</a>

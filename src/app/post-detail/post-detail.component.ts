@@ -5,6 +5,9 @@ import * as firebase from 'firebase';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
+import { UserService } from '../user.service';
+import { Subscription } from 'rxjs/Subscription';
+
 @Component({
   selector: 'app-post-detail',
   templateUrl: './post-detail.component.html',
@@ -14,9 +17,11 @@ export class PostDetailComponent implements OnInit, OnDestroy {
   public postId: any;
   public twitt: any;
   private sub: any;
+  private _sub: Subscription;
+  public user: any;
   private _replys: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
-  constructor(private route: ActivatedRoute, private _zone: NgZone) { }
+  constructor(private route: ActivatedRoute, private _zone: NgZone, private _us: UserService) { }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
@@ -31,6 +36,11 @@ export class PostDetailComponent implements OnInit, OnDestroy {
         });
        });
     });
+
+    this._sub = this._us.user.subscribe((value: any) =>  {
+     console.log(value);
+     this.user = value;
+   });
 
     
   }
