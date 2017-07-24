@@ -3,4 +3,7 @@
 </p>
 <p>{{postId}}</p>
 <p>{{twitt.body}}</p>
+<input type="text" #reply>
+<button (click)="sendReply(reply.value)">send reply</button><br>
+<div *ngFor="let reply of replys | async">{{reply.body}}</div>
 <a routerLink="/posts">Back to Posts List</a>

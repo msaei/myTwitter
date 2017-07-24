@@ -14,6 +14,8 @@ export class PostDetailComponent implements OnInit, OnDestroy {
   public postId: any;
   public twitt: any;
   private sub: any;
+  private _replys: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+
   constructor(private route: ActivatedRoute, private _zone: NgZone) { }
 
   ngOnInit() {
@@ -25,13 +27,41 @@ export class PostDetailComponent implements OnInit, OnDestroy {
         console.log(snapshot.val());
         this._zone.run(() => {
           this.twitt = snapshot.val();
+          this.retirveReplys()
         });
        });
     });
+
+    
+  }
+
+  private retirveReplys(){
+    firebase.database().ref('replys/'+ this.postId).on('child_added', (data: any) => {
+      let reply = data.val();
+      let key = { 'key': data.key};
+      Object.assign(reply , key);
+      //console.log(twitt);
+      this._replys.value.push(reply);
+      //this._tools.next(snapshot.val());
+    });
+  }
+
+  get replys(): Observable<any[]>{
+    return this._replys.asObservable();
   }
 
   ngOnDestroy(){
     this.sub.unsubscribe();
+  }
+
+  public sendReply(reply) {
+    console.log(reply);
+    let comment = {
+      body: reply
+    };
+    let newReply = firebase.database().ref('replys/'+ this.postId).push();
+    //console.log(newTwitt.key);
+    newReply.set(comment);
   }
 
 }
