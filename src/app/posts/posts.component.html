@@ -1,8 +1,8 @@
-<md-card>
+<md-card *ngIf="user">
     <md-input-container class="full-width">
         <textarea #twt mdInput placeholder="Twitt your thought here..."></textarea>
     </md-input-container>
-    <button md-raised-button (click)="send_twitt(twt)">Submit</button>
+    <button md-raised-button (click)="send_twitt(twt.value)">Submit</button>
 </md-card>
 
 

@@ -46,9 +46,9 @@ export class PostsComponent implements OnInit {
 
   public send_twitt(twt) {
     let twitt = {
-      body: twt.value
+      body: twt
     };
-    twt.value = '';
+    //twt.value = '';
     let newTwitt = firebase.database().ref('twitt').push();
     console.log(newTwitt.key);
     newTwitt.set(twitt);

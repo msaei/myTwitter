@@ -65,10 +65,11 @@ export class PostDetailComponent implements OnInit, OnDestroy {
   }
 
   public sendReply(reply) {
-    console.log(reply);
+    //console.log(reply);
     let comment = {
       body: reply
     };
+    //reply.value = '';
     let newReply = firebase.database().ref('replys/'+ this.postId).push();
     //console.log(newTwitt.key);
     newReply.set(comment);

@@ -1,10 +1,20 @@
-<md-card>Simple card</md-card>
-<p>{{postId}}</p>
-<p>{{twitt.body}}</p>
-<div *ngIf="user">
-    <input type="text" #reply>
-    <button (click)="sendReply(reply.value)">send reply</button>
-</div>
-<div *ngFor="let reply of replys | async">{{reply.body}}</div>
+<md-card>{{twitt.body}}</md-card>
+
+<md-card *ngIf="user">
+    <md-input-container class="full-width">
+        <textarea #reply mdInput placeholder="reply to this post here..."></textarea>
+    </md-input-container>
+    <button md-raised-button (click)="sendReply(reply.value)">Submit</button>
+</md-card>
+
+
+
+<md-card>
+    <md-list>
+        <md-list-item *ngFor="let reply of replys | async">
+            {{reply.body}}
+        </md-list-item>
+    </md-list>
+</md-card>
 
 <a routerLink="/posts">Back to Posts List</a>
