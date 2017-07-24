@@ -1,6 +1,10 @@
-<input type="text" #twt placeholder="write new twitt">
-<button (click)="send_twitt(twt.value)">send twitt</button>
-
+<h3>{{(user) ? user.displayName : ''}}</h3>
+<button *ngIf="!user" (click)="signInGoogle()">login</button>
+<button *ngIf="user" (click)="signOutGoogle()">log out</button><br>
+<div *ngIf="user">
+    <input type="text" #twt placeholder="write new twitt">
+    <button (click)="send_twitt(twt.value)">send twitt</button>
+</div>
 
 <div *ngFor="let post of posts | async">
     <a [routerLink]="['/post', post.key]">

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { UserService } from '../user.service';
+import { Subscription } from 'rxjs/Subscription';
 
 
 
@@ -13,18 +15,29 @@ import { Observable } from 'rxjs/Observable';
 export class PostsComponent implements OnInit {
   //private _posts: any[] = POSTS;
   private _posts: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  private _sub: Subscription;
+  public user: any;
 
-  constructor() { }
+  constructor(private _us: UserService) { }
 
   ngOnInit() {
     firebase.database().ref('twitt').on('child_added', (data: any) => {
       let twitt = data.val();
       let key = { 'key': data.key};
       Object.assign(twitt , key);
-      console.log(twitt);
+      //console.log(twitt);
       this._posts.value.push(twitt);
       //this._tools.next(snapshot.val());
     });
+
+    this._sub = this._us.user.subscribe((value: any) =>  {
+     console.log(value);
+     this.user = value;
+
+     /*this._zone.run(() => {
+      this.user = value;
+     })*/
+   });
   }
 
   get posts(): Observable<any[]>{
@@ -37,7 +50,22 @@ export class PostsComponent implements OnInit {
       body: twt
     };
     let newTwitt = firebase.database().ref('twitt').push();
+    console.log(newTwitt.key);
     newTwitt.set(twitt);
   }
+
+  public signInGoogle(): void {
+     this._us.signInGoogle((error: any, success: any) => {
+       console.log(error);
+       console.log(success);
+     });
+   }
+
+   public signOutGoogle(): void {
+     this._us.signOut((error: any, success: any) => {
+       console.log(error);
+       console.log(success);
+     });
+   }
 
 }
