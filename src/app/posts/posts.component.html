@@ -1,7 +1,11 @@
-<div *ngIf="user">
-    <input type="text" #twt placeholder="write new twitt">
-    <button (click)="send_twitt(twt.value)">send twitt</button>
-</div>
+<md-card>
+    <md-input-container class="full-width">
+        <textarea #twt mdInput placeholder="Twitt your thought here..."></textarea>
+    </md-input-container>
+    <button md-raised-button (click)="send_twitt(twt)">Submit</button>
+</md-card>
+
+
 <md-card>
     <md-list>
         <md-list-item *ngFor="let post of posts | async">

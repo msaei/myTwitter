@@ -45,27 +45,15 @@ export class PostsComponent implements OnInit {
   }
 
   public send_twitt(twt) {
-    console.log(twt);
     let twitt = {
-      body: twt
+      body: twt.value
     };
+    twt.value = '';
     let newTwitt = firebase.database().ref('twitt').push();
     console.log(newTwitt.key);
     newTwitt.set(twitt);
   }
 
-  public signInGoogle(): void {
-     this._us.signInGoogle((error: any, success: any) => {
-       console.log(error);
-       console.log(success);
-     });
-   }
-
-   public signOutGoogle(): void {
-     this._us.signOut((error: any, success: any) => {
-       console.log(error);
-       console.log(success);
-     });
-   }
+  
 
 }
