@@ -1,3 +1,12 @@
 .full-width {
     width: 100%;
 }
+
+.top-card {
+    margin-bottom: 20px;
+}
+
+.media-object {
+    height: 5rem;
+    width: 5rem;
+}
