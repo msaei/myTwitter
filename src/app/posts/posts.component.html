@@ -1,7 +1,7 @@
 <div class="container-fluid">
 
-    <div *ngIf="user" class="row top-card">
-        <md-card class="col-md-6 col-md-offset-3">
+    <div class="row top-card">
+        <md-card *ngIf="user" class="col-md-6 col-md-offset-3">
             <md-input-container class="full-width">
                 <textarea #twt mdInput placeholder="Twitt your thought here..."></textarea>
             </md-input-container>
@@ -14,7 +14,7 @@
         <div *ngFor="let post of posts | async" class="col-md-6 col-md-offset-3 media">
             <div class="media-left">
                 <a href="#">
-                    <img class="media-object img-circle" [src]="user.photoURL" alt="...">
+                    <img class="media-object img-circle" src="http://lorempixel.com/100/100/people/2/" alt="...">
                 </a>
             </div>
             <div class="media-body">

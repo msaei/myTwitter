@@ -1,20 +1,44 @@
-<md-card>{{twitt.body}}</md-card>
+<div class="container-fluid">
+    <div class="row">
+        <div class="media col-md-6 col-md-offset-3">
+            <div class="media-left ">
+                <a href="#">
+                    <img class="media-object img-circle" src="http://lorempixel.com/100/100/people/1/" alt="...">
+                </a>
+            </div>
+            <div class="media-body">
+                <h3>
+                    {{twitt.body}}
+                </h3>
+            </div>
+        </div>
+    </div>
 
-<md-card *ngIf="user">
-    <md-input-container class="full-width">
-        <textarea #reply mdInput placeholder="reply to this post here..."></textarea>
-    </md-input-container>
-    <button md-raised-button (click)="sendReply(reply.value)">Submit</button>
-</md-card>
+
+    <div class="row">
+        <div *ngFor="let reply of replys | async" class="col-md-6 col-md-offset-4 col-xs-offset-1 media">
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object img-circle" src="http://lorempixel.com/100/100/people/1/" alt="...">
+                </a>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">Media heading</h4>
+                <p>
+                    {{reply.body}}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <md-card *ngIf="user" class="col-md-6 col-md-offset-3 media">
+            <md-input-container class="full-width">
+                <textarea #reply mdInput placeholder="reply to this post here..."></textarea>
+            </md-input-container>
+            <button md-raised-button (click)="sendReply(reply.value)">Submit</button>
+        </md-card>
+    </div>
 
 
-
-<md-card>
-    <md-list>
-        <md-list-item *ngFor="let reply of replys | async">
-            {{reply.body}}
-        </md-list-item>
-    </md-list>
-</md-card>
-
-<a routerLink="/posts">Back to Posts List</a>
+</div>
