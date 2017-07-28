@@ -27,8 +27,8 @@ export class PostDetailComponent implements OnInit, OnDestroy {
     this.sub = this.route.params.subscribe(params => {
       console.log(params);
       this.postId = params['id'];
-      let twittRef = firebase.database().ref('twitt/' + this.postId );
-      twittRef.on('value', snapshot => {
+      let postRef = firebase.database().ref('posts/' + this.postId );
+      postRef.on('value', snapshot => {
         console.log(snapshot.val());
         this._zone.run(() => {
           this.twitt = snapshot.val();

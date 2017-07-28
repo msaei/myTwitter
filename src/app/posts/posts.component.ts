@@ -63,6 +63,35 @@ export class PostsComponent implements OnInit {
 
   public favoriteChanged(fav) {
     console.log(fav);
+    if(this.user){
+     let userEmailId = (this.user.email) as string;
+     userEmailId = userEmailId.split('.').join('___');
+    
+     let postRef = firebase.database().ref('posts/'+ fav.hostId);
+     postRef.update({likes: fav.count});
+    if (fav.status){
+      postRef.child('likers/' + userEmailId).update({stats: true});
+    }else{
+      postRef.child('likers/' + userEmailId).remove();
+    }
+    
+   }
+  }
+
+  public isFavorite(likers: any): boolean{
+    if(this.user){
+    if(likers){
+    let userEmailId = (this.user.email) as string;
+     userEmailId = userEmailId.split('.').join('___');
+    //console.log(likers[liker]);
+    if (likers[userEmailId]){return true;}
+    return false;}}
+    return false;
+  }
+
+  get signedIn(): boolean {
+    if (this.user){ return true};
+    return false;
   }
 
   

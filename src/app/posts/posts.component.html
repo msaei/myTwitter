@@ -16,7 +16,7 @@
                 <a href="#">
                     <img class="media-object img-circle" [src]="post.author.photo" alt="...">
                 </a>
-                <app-favorite (change)="favoriteChanged($event)" [hostId]="post.key"></app-favorite>
+                <app-favorite (change)="favoriteChanged($event)" [hostId]="post.key" [favoriteCount]="post.likes" [isFavorite]="isFavorite(post.likers)" [disabled]="!signedIn"></app-favorite>
             </div>
             <div class="media-body">
                 <h4 class="media-heading">{{post.author.name}}</h4>

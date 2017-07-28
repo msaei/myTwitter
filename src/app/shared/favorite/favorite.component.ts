@@ -10,6 +10,7 @@ export class FavoriteComponent implements OnInit {
   @Output() change = new EventEmitter();
   @Input() favoriteCount: number = 0;
   @Input() hostId: string;
+  @Input() disabled: boolean;
 
   constructor() { }
 
@@ -17,6 +18,7 @@ export class FavoriteComponent implements OnInit {
   }
 
   public toggleFavorite() {
+    if(!this.disabled){
     this.isFavorite = !this.isFavorite;
     this.favoriteCount += this.isFavorite? +1 : -1;
     let favorite = {
@@ -24,7 +26,7 @@ export class FavoriteComponent implements OnInit {
       count: this.favoriteCount,
       hostId: this.hostId
     };
-    this.change.emit(favorite);
+    this.change.emit(favorite);}
   }
 
 }
