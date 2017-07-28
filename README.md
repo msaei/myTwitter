@@ -29,7 +29,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 
 to do list:
-1-add author object to posts and replys
+1-`add author object to posts and replys`
 2-add like post and replys
 3-prevent leave page before submit posts
 4-add users home page

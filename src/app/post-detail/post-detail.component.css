@@ -4,9 +4,11 @@
 
 .author-img {
     margin-top: 1rem;
-}
-
-.media-object {
     height: 7rem;
     width: 7rem;
+}
+
+.reply-img {
+    height: 5rem;
+    width: 5rem;
 }

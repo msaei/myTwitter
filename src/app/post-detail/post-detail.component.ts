@@ -65,9 +65,14 @@ export class PostDetailComponent implements OnInit, OnDestroy {
   }
 
   public sendReply(reply) {
-    //console.log(reply);
+    let author = {
+      name: this.user.displayName,
+      photo: this.user.photoURL,
+      email: this.user.email
+    };
     let comment = {
-      body: reply
+      body: reply,
+      author: author
     };
     //reply.value = '';
     let newReply = firebase.database().ref('replys/'+ this.postId).push();

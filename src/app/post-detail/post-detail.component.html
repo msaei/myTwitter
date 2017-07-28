@@ -20,11 +20,11 @@
         <div *ngFor="let reply of replys | async" class="col-md-6 col-md-offset-4 col-xs-offset-1 media">
             <div class="media-left">
                 <a href="#">
-                    <img class="media-object img-circle" src="http://lorempixel.com/100/100/people/1/" alt="...">
+                    <img class="media-object img-circle reply-img" [src]="reply.author.photo" alt="...">
                 </a>
             </div>
             <div class="media-body">
-                <h4 class="media-heading">Media heading</h4>
+                <h4 class="media-heading">{{reply.author.name}}</h4>
                 <p>
                     {{reply.body}}
                 </p>
