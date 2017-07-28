@@ -21,7 +21,7 @@ export class PostsComponent implements OnInit {
   constructor(private _us: UserService) { }
 
   ngOnInit() {
-    firebase.database().ref('twitt').on('child_added', (data: any) => {
+    firebase.database().ref('posts').on('child_added', (data: any) => {
       let twitt = data.val();
       let key = { 'key': data.key};
       Object.assign(twitt , key);
@@ -52,10 +52,11 @@ export class PostsComponent implements OnInit {
     };
     let twitt = {
       author: author,
-      body: twt
+      body: twt,
+      likes: 0
     };
     //twt.value = '';
-    let newTwitt = firebase.database().ref('twitt').push();
+    let newTwitt = firebase.database().ref('posts').push();
     console.log(newTwitt.key);
     newTwitt.set(twitt);
   }

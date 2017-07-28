@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { Subscription } from 'rxjs/Subscription';
 
+import * as firebase from 'firebase';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -17,6 +19,9 @@ export class NavbarComponent implements OnInit {
     this._sub = this._us.user.subscribe((value: any) =>  {
      console.log(value);
      this.user = value;
+     this.updateUsers();
+     
+     
 
      /*this._zone.run(() => {
       this.user = value;
@@ -28,6 +33,7 @@ export class NavbarComponent implements OnInit {
      this._us.signInGoogle((error: any, success: any) => {
        console.log(error);
        console.log(success);
+       
      });
    }
 
@@ -35,7 +41,24 @@ export class NavbarComponent implements OnInit {
      this._us.signOut((error: any, success: any) => {
        console.log(error);
        console.log(success);
+       
      });
+   }
+
+   private updateUsers(): void {
+     if(this.user){
+     let userEmailId = (this.user.email) as string;
+     userEmailId = userEmailId.split('.').join('___');
+     let user = {
+      name: this.user.displayName,
+      photo: this.user.photoURL,
+      email: this.user.email
+    };
+     let userRef = firebase.database().ref('users/'+ userEmailId);
+    //console.log(newTwitt.key);
+    userRef.update(user);
+   }
+
    }
 
 }
