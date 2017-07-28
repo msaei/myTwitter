@@ -49,7 +49,6 @@ export class PostsComponent implements OnInit {
       name: this.user.displayName,
       photo: this.user.photoURL,
       email: this.user.email
-
     };
     let twitt = {
       author: author,
@@ -59,6 +58,10 @@ export class PostsComponent implements OnInit {
     let newTwitt = firebase.database().ref('twitt').push();
     console.log(newTwitt.key);
     newTwitt.set(twitt);
+  }
+
+  public favoriteChanged(fav) {
+    console.log(fav);
   }
 
   
