@@ -2,7 +2,11 @@
     width: 100%;
 }
 
+.author-img {
+    margin-top: 1rem;
+}
+
 .media-object {
-    height: 5rem;
-    width: 5rem;
+    height: 7rem;
+    width: 7rem;
 }

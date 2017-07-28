@@ -3,13 +3,14 @@
         <div class="media col-md-6 col-md-offset-3">
             <div class="media-left ">
                 <a href="#">
-                    <img class="media-object img-circle" src="http://lorempixel.com/100/100/people/1/" alt="...">
+                    <img class="media-object img-circle author-img" [src]="twitt.author.photo" alt="...">
                 </a>
             </div>
             <div class="media-body">
                 <h3>
                     {{twitt.body}}
                 </h3>
+                <p> | {{twitt.author.name}}</p>
             </div>
         </div>
     </div>

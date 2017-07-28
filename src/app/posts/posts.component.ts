@@ -45,7 +45,14 @@ export class PostsComponent implements OnInit {
   }
 
   public send_twitt(twt) {
+    let author = {
+      name: this.user.displayName,
+      photo: this.user.photoURL,
+      email: this.user.email
+
+    };
     let twitt = {
+      author: author,
       body: twt
     };
     //twt.value = '';

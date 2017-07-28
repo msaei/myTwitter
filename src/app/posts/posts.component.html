@@ -14,11 +14,11 @@
         <div *ngFor="let post of posts | async" class="col-md-6 col-md-offset-3 media">
             <div class="media-left">
                 <a href="#">
-                    <img class="media-object img-circle" src="http://lorempixel.com/100/100/people/2/" alt="...">
+                    <img class="media-object img-circle" [src]="post.author.photo" alt="...">
                 </a>
             </div>
             <div class="media-body">
-                <h4 class="media-heading">Media heading</h4>
+                <h4 class="media-heading">{{post.author.name}}</h4>
                 <p>
                     {{post.body + ' . '}}
                     <a [routerLink]="['/post', post.key]"> read more ...</a>
