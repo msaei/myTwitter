@@ -12,6 +12,10 @@ import { UserService } from './user.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FavoriteComponent } from './shared/favorite/favorite.component';
 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { environment } from '../environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +28,9 @@ import { FavoriteComponent } from './shared/favorite/favorite.component';
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
-    routing
+    routing,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule
   ],
   providers: [
     UserService

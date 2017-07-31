@@ -5,6 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { UserService } from '../user.service';
 import { Subscription } from 'rxjs/Subscription';
 
+import { AngularFireDatabase } from 'angularfire2/database';
+
 
 
 @Component({
@@ -17,18 +19,29 @@ export class PostsComponent implements OnInit {
   private _posts: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   private _sub: Subscription;
   public user: any;
+  public posts;
 
-  constructor(private _us: UserService) { }
+  constructor(private _us: UserService, private db: 
+  AngularFireDatabase) {
+    
+   }
 
   ngOnInit() {
-    firebase.database().ref('posts').on('child_added', (data: any) => {
+    /* firebase.database().ref('posts').on('child_added', (data: any) => {
       let twitt = data.val();
       let key = { 'key': data.key};
       Object.assign(twitt , key);
       //console.log(twitt);
       this._posts.value.push(twitt);
       //this._tools.next(snapshot.val());
-    });
+    }); */
+    //console.log(this.db.list('posts'));
+    
+    this.posts = this.db.list('posts');
+    this.posts.subscribe(
+      val => console.log(val)
+    )
+   // console.log (this.db.object('/posts'));
 
     this._sub = this._us.user.subscribe((value: any) =>  {
      console.log(value);
@@ -40,9 +53,9 @@ export class PostsComponent implements OnInit {
    });
   }
 
-  get posts(): Observable<any[]>{
+  /* get posts(): Observable<any[]>{
     return this._posts.asObservable();
-  }
+  } */
 
   public send_twitt(twt) {
     let author = {

@@ -8,6 +8,8 @@ import { Observable } from 'rxjs/Observable';
 import { UserService } from '../user.service';
 import { Subscription } from 'rxjs/Subscription';
 
+import { AngularFireDatabase } from 'angularfire2/database';
+
 @Component({
   selector: 'app-post-detail',
   templateUrl: './post-detail.component.html',
@@ -20,8 +22,9 @@ export class PostDetailComponent implements OnInit, OnDestroy {
   private _sub: Subscription;
   public user: any;
   private _replys: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public replys;
 
-  constructor(private route: ActivatedRoute, private _zone: NgZone, private _us: UserService) { }
+  constructor(private route: ActivatedRoute, private _zone: NgZone, private _us: UserService, private db: AngularFireDatabase) { }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
@@ -32,7 +35,8 @@ export class PostDetailComponent implements OnInit, OnDestroy {
         console.log(snapshot.val());
         this._zone.run(() => {
           this.twitt = snapshot.val();
-          this.retirveReplys()
+          this.replys = this.db.list('/replys/' + this.postId);
+          
         });
        });
     });
@@ -45,7 +49,7 @@ export class PostDetailComponent implements OnInit, OnDestroy {
     
   }
 
-  private retirveReplys(){
+  /* private retirveReplys(){
     firebase.database().ref('replys/'+ this.postId).on('child_added', (data: any) => {
       let reply = data.val();
       let key = { 'key': data.key};
@@ -54,11 +58,11 @@ export class PostDetailComponent implements OnInit, OnDestroy {
       this._replys.value.push(reply);
       //this._tools.next(snapshot.val());
     });
-  }
+  } */
 
-  get replys(): Observable<any[]>{
+  /* get replys(): Observable<any[]>{
     return this._replys.asObservable();
-  }
+  } */
 
   ngOnDestroy(){
     this.sub.unsubscribe();

@@ -22,7 +22,7 @@
                 <h4 class="media-heading">{{post.author.name}}</h4>
                 <p>
                     {{post.body + ' . '}}
-                    <a [routerLink]="['/post', post.key]"> read more ...</a>
+                    <a [routerLink]="['/post', post.$key]"> read more ...</a>
                 </p>
             </div>
         </div>
