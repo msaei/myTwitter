@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import * as firebase from 'firebase';
@@ -15,31 +15,20 @@ import { AngularFireDatabase } from 'angularfire2/database';
   templateUrl: './post-detail.component.html',
   styleUrls: ['./post-detail.component.css']
 })
-export class PostDetailComponent implements OnInit, OnDestroy {
+export class PostDetailComponent implements OnInit{
   public postId: any;
   public twitt: any;
-  private sub: any;
   private _sub: Subscription;
   public user: any;
-  private _replys: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public replys;
 
   constructor(private route: ActivatedRoute, private _zone: NgZone, private _us: UserService, private db: AngularFireDatabase) { }
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => {
-      console.log(params);
-      this.postId = params['id'];
-      let postRef = firebase.database().ref('posts/' + this.postId );
-      postRef.on('value', snapshot => {
-        console.log(snapshot.val());
-        this._zone.run(() => {
-          this.twitt = snapshot.val();
-          this.replys = this.db.list('/replys/' + this.postId);
-          
-        });
-       });
-    });
+    this.postId = this.route.snapshot.paramMap.get('id');
+    this.replys = this.db.list('/replys/' + this.postId);
+    this.twitt = this.db.object('/posts/' + this.postId);
+   
 
     this._sub = this._us.user.subscribe((value: any) =>  {
      console.log(value);
@@ -49,24 +38,6 @@ export class PostDetailComponent implements OnInit, OnDestroy {
     
   }
 
-  /* private retirveReplys(){
-    firebase.database().ref('replys/'+ this.postId).on('child_added', (data: any) => {
-      let reply = data.val();
-      let key = { 'key': data.key};
-      Object.assign(reply , key);
-      //console.log(twitt);
-      this._replys.value.push(reply);
-      //this._tools.next(snapshot.val());
-    });
-  } */
-
-  /* get replys(): Observable<any[]>{
-    return this._replys.asObservable();
-  } */
-
-  ngOnDestroy(){
-    this.sub.unsubscribe();
-  }
 
   public sendReply(reply) {
     let author = {
