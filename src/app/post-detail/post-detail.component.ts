@@ -22,7 +22,7 @@ export class PostDetailComponent implements OnInit{
   public user: any;
   public replys;
 
-  constructor(private route: ActivatedRoute, private _zone: NgZone, private _us: UserService, private db: AngularFireDatabase) { }
+  constructor(private route: ActivatedRoute, private _us: UserService, private db: AngularFireDatabase) { }
 
   ngOnInit() {
     this.postId = this.route.snapshot.paramMap.get('id');
