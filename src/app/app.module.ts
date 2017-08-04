@@ -16,6 +16,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment } from '../environments/environment';
 import { DateAgoPipe } from './date-ago.pipe';
+import { SummaryPipe } from './summary.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { DateAgoPipe } from './date-ago.pipe';
     PostDetailComponent,
     NavbarComponent,
     FavoriteComponent,
-    DateAgoPipe
+    DateAgoPipe,
+    SummaryPipe
   ],
   imports: [
     BrowserModule,

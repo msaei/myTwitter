@@ -16,22 +16,7 @@ export class DateAgoPipe implements PipeTransform {
     const WEEK = DAY * 7;
     const MONTH = DAY * 30;
     const YEAR = MONTH * 12;
-    /* const TIMEGAPS = [
-      { name: 'year' , time: YEAR },
-      { name: 'month' , time: MONTH },
-      { name: 'week' , time: WEEK },
-      { name: 'day' , time: DAY },
-      { name: 'hour' , time: HOUR },
-      { name: 'min' , time: MIN }
-    ] */
-    
-    /* TIMEGAPS.forEach( step =>{
-      count = Math.floor(gap/step.time);
-      if (count > 0 ){
-        return count + ' ' + step.name + ((count > 1) ? 's' : '') + ' ago.'
-      }
-    });
-    return "just now"; */
+   
 
      if (gap > YEAR) {
        count = Math.floor(gap/YEAR);
