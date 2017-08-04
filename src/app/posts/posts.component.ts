@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -21,8 +22,7 @@ export class PostsComponent implements OnInit {
   public user: any;
   public posts;
 
-  constructor(private _us: UserService, private db: 
-  AngularFireDatabase) {
+  constructor(private _us: UserService, private db: AngularFireDatabase, private router: Router) {
     
    }
 
@@ -38,9 +38,9 @@ export class PostsComponent implements OnInit {
     //console.log(this.db.list('posts'));
     
     this.posts = this.db.list('posts');
-    this.posts.subscribe(
+    /* this.posts.subscribe(
       val => console.log(val)
-    )
+    ) */
    // console.log (this.db.object('/posts'));
 
     this._sub = this._us.user.subscribe((value: any) =>  {
@@ -72,6 +72,7 @@ export class PostsComponent implements OnInit {
     let newTwitt = firebase.database().ref('posts').push();
     console.log(newTwitt.key);
     newTwitt.set(twitt);
+    this.router.navigate(['/post', newTwitt.key]);
   }
 
   public favoriteChanged(fav) {
@@ -80,13 +81,14 @@ export class PostsComponent implements OnInit {
      let userEmailId = (this.user.email) as string;
      userEmailId = userEmailId.split('.').join('___');
     
-     let postRef = firebase.database().ref('posts/'+ fav.hostId);
-     postRef.update({likes: fav.count});
+    //this.db .object('posts/' + fav.hostId ).update({likes: fav.count});
+       let postRef = firebase.database().ref('posts/'+ fav.hostId);
+     postRef.update({likes: fav.count}); 
     if (fav.status){
       postRef.child('likers/' + userEmailId).update({stats: true});
     }else{
       postRef.child('likers/' + userEmailId).remove();
-    }
+    } 
     
    }
   }
