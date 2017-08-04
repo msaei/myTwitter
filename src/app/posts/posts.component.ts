@@ -37,7 +37,12 @@ export class PostsComponent implements OnInit {
     }); */
     //console.log(this.db.list('posts'));
     
-    this.posts = this.db.list('posts');
+    this.posts = this.db.list('posts',{
+  query: {
+    orderByChild: 'date'
+
+  }
+  });
     /* this.posts.subscribe(
       val => console.log(val)
     ) */
@@ -66,13 +71,15 @@ export class PostsComponent implements OnInit {
     let twitt = {
       author: author,
       body: twt,
-      likes: 0
+      likes: 0,
+      date: -Date.now()
     };
     //twt.value = '';
     let newTwitt = firebase.database().ref('posts').push();
     console.log(newTwitt.key);
     newTwitt.set(twitt);
     this.router.navigate(['/post', newTwitt.key]);
+    console.log(Date.now());
   }
 
   public favoriteChanged(fav) {
