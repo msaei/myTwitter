@@ -24,6 +24,7 @@
                     {{post.body + ' . '}}
                     <a [routerLink]="['/post', post.$key]"> read more ...</a>
                 </p>
+                <p>{{ -post.date | dateAgo }}</p>
             </div>
         </div>
     </div>

@@ -116,6 +116,10 @@ export class PostsComponent implements OnInit {
     return false;
   }
 
+  getDate(dateNumber: number) {
+    let date = new Date(-dateNumber);
+    return date.toDateString();
+  }
   
 
 }
